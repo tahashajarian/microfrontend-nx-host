@@ -1,0 +1,87 @@
+{
+  "name": "shop-cart",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/shop-cart/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/shop-cart",
+        "index": "apps/shop-cart/src/index.html",
+        "baseHref": "/",
+        "main": "apps/shop-cart/src/main.ts",
+        "tsConfig": "apps/shop-cart/tsconfig.app.json",
+        "assets": [
+          "apps/shop-cart/src/favicon.ico",
+          "apps/shop-cart/src/assets"
+        ],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "apps/shop-cart/webpack.config.ts"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/shop-cart/src/environments/environment.ts",
+              "with": "apps/shop-cart/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "webpackConfig": "apps/shop-cart/webpack.config.prod.ts"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "shop-cart:build",
+        "hmr": true,
+        "port": 4201
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "shop-cart:build:development"
+        },
+        "production": {
+          "buildTarget": "shop-cart:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "shop-cart:build",
+        "watch": false,
+        "port": 4201
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "shop-cart:build:development"
+        },
+        "production": {
+          "buildTarget": "shop-cart:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}

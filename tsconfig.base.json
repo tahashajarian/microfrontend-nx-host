@@ -1,0 +1,27 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@final/counter": ["libs/counter/src/index.ts"],
+      "@final/counter/server": ["libs/counter/src/server.ts"],
+      "about/Module": ["apps/about/src/remote-entry.ts"],
+      "shop-cart/Module": ["apps/shop-cart/src/remote-entry.ts"],
+      "test-remote-next/Module": ["apps/test-remote-next/src/remote-entry.ts"],
+      "remote/Module": ["http://localhost:4300/remote-entry.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

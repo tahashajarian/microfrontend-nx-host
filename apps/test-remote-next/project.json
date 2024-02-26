@@ -1,0 +1,87 @@
+{
+  "name": "test-remote-next",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/test-remote-next/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/test-remote-next",
+        "index": "apps/test-remote-next/src/index.html",
+        "baseHref": "/",
+        "main": "apps/test-remote-next/src/main.ts",
+        "tsConfig": "apps/test-remote-next/tsconfig.app.json",
+        "assets": [
+          "apps/test-remote-next/src/favicon.ico",
+          "apps/test-remote-next/src/assets"
+        ],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "apps/test-remote-next/webpack.config.ts"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/test-remote-next/src/environments/environment.ts",
+              "with": "apps/test-remote-next/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "webpackConfig": "apps/test-remote-next/webpack.config.prod.ts"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "test-remote-next:build",
+        "hmr": true,
+        "port": 4203
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "test-remote-next:build:development"
+        },
+        "production": {
+          "buildTarget": "test-remote-next:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "test-remote-next:build",
+        "watch": false,
+        "port": 4203
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "test-remote-next:build:development"
+        },
+        "production": {
+          "buildTarget": "test-remote-next:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}
